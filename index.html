@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+<script type="text/javascript" src="gif.js"></script>
+
+<style>
+#webcam, #result, #canvas {
+	height: 120px;
+	width: 160px;
+
+}
+#webcam {
+	-webkit-transform: scale(-1, 1);
+	-moz-transform: scale(-1, 1);
+	-ms-transform: scale(-1, 1);
+	transform: scale(-1, 1);
+	float: right;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomright: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+#canvas {
+	display: none;
+}
+#result {
+	display: block;
+	float: left;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomright: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+#snap {
+	margin: 15px auto;
+	display: block
+}
+.pure-button {
+	background: #e60;
+	color: #fff;
+}
+.lighten {
+	opacity: 0.5;
+}
+</style>
+
+</head>
+
+<body>
+
+<div style="margin-top: 15px">
+<div class="pure-g">
+	<div class="pure-u-1-2">
+		<video class="lighten" id="webcam"></video>
+		<canvas id="canvas"></canvas>
+	</div>
+	<div class="pure-u-1-2">
+		<img id="result" src="blank.png"/>
+	</div>
+	<div class="pure-u-1-1">
+		<button id="snap" class="pure-button">Snap</button>
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
++function(window, document) { "use strict";
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
+window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL
+
+var video = document.getElementById("webcam"),
+    snapBtn = document.getElementById("snap"),
+    canvas = document.getElementById("canvas"),
+    ctx = canvas.getContext("2d"),
+    result = document.getElementById("result"),
+    width = 160,
+    height = 120
+
+if (!navigator.getUserMedia) {
+	console.log("Camera Not Supported")
+	return;
+}
+
+navigator.getUserMedia({video: true}, successCallback, errorCallback)
+
+function successCallback(stream) {
+	if (video.mozSrcObject !== undefined) {
+		video.mozSrcObject = stream;
+	} else {
+		video.src = (window.URL && window.URL.createObjectURL(stream)) || stream
+	}
+}
+
+function errorCallback() {}
+
++function init() {
+	canvas.height = height
+	canvas.width = width
+	ctx.translate(width, 0)
+	ctx.scale(-1, 1)
+
+	snapBtn.onclick = function() {
+
+		snapBtn.disabled = true
+		video.className = ""
+		result.className = "lighten"
+
+		var gif = new GIF({
+					workers: 2,
+					quality: 3,
+					height: height,
+					width: width
+				}),
+		    numFrames = 8,
+		    interval = window.setInterval(function() {
+			    if (numFrames < 1) {
+				    window.clearInterval(interval)
+						gif.render()
+						snapBtn.disabled = false
+						video.className = "lighten"
+						return
+			    }
+					numFrames -= 1
+					ctx.drawImage(video, 0, 0, width, height)
+		      gif.addFrame(ctx, {copy: true, delay: 100})
+		    }, 340)
+
+		gif.on("finished", function(blob) {
+			result.src = window.URL.createObjectURL(blob)
+			result.className = ""
+		})
+
+	}
+
+	video.play()
+
+}()
+
+}(window, document)
+
+</script>
+
+</body>
+</html>
