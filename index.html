@@ -124,6 +124,7 @@ function errorCallback() {}
           if (numFrames < 1) {
             window.clearInterval(interval)
             gif.render()
+      			video.className = "lighten"
             return
           }
           numFrames -= 1
@@ -135,7 +136,6 @@ function errorCallback() {}
       result.src = window.URL.createObjectURL(blob)
       result.className = ""
       snapBtn.disabled = false
-      video.className = "lighten"
     })
 
   }
