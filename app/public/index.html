@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+<link rel="stylesheet" href="//yui.yahooapis.com/pure/0.4.2/pure-min.css">
 <script type="text/javascript" src="gif.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 
 <style>
 #webcam, #result, #canvas {
@@ -68,7 +70,18 @@
     <button id="snap" class="pure-button">Snap</button>
   </div>
 </div>
+<div class="pure-g">
+	<div class="pure-u-1">
+		<ul id="images"></ul>
+	</div>
 </div>
+</div>
+
+<script type="html/template" id="images-template">
+<% _.each(images, function(img) { %>
+	<li><img src="<%= img %>" /></li>
+<% }); %>
+</script>
 
 <script type="text/javascript">
 +function(window, document) { "use strict";
@@ -82,12 +95,26 @@ var video = document.getElementById("webcam"),
     ctx = canvas.getContext("2d"),
     result = document.getElementById("result"),
     width = 160,
-    height = 120
+    height = 120,
+    imagesContainer = document.getElementById("images"),
+    images = [],
+    socket = io.connect('http://localhost'),
+    imagesTemplate = _.template(document.getElementById("images-template").innerHTML);
 
 if (!navigator.getUserMedia) {
   console.log("Camera Not Supported")
   return;
 }
+
+
+
+socket.on('buuur added', function(data) {
+	images.unshift(data.img);
+	while (images.length > 10) {
+		images.pop();
+	}
+	imagesContainer.innerHTML = imagesTemplate({images: images});
+});
 
 navigator.getUserMedia({video: true}, successCallback, errorCallback)
 
@@ -101,7 +128,18 @@ function successCallback(stream) {
 
 function errorCallback() {}
 
+var xhr = new XMLHttpRequest;
+xhr.open('GET', '/images', true);
+xhr.onload = function() {
+  if (xhr.status == 200) {
+    images = JSON.parse(xhr.responseText);
+    imagesContainer.innerHTML = imagesTemplate({images: images})
+  }
+};
+xhr.send();
+
 +function init() {
+
   canvas.height = height
   canvas.width = width
   ctx.translate(width, 0)
@@ -130,10 +168,20 @@ function errorCallback() {}
           numFrames -= 1
           ctx.drawImage(video, 0, 0, width, height)
           gif.addFrame(ctx, {copy: true, delay: 100})
-        }, 340)
+        }, 340),
+        oldblob
 
     gif.on("finished", function(blob) {
-      result.src = window.URL.createObjectURL(blob)
+      //result.src = window.URL.createObjectURL(blob)
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				console.log(reader.result);
+				result.src = reader.result;
+				socket.emit('add buuur', {img: reader.result});
+			}
+			reader.readAsDataURL(blob);
+      window.URL.revokeObjectURL(oldblob)
+      oldblob = blob
       result.className = ""
       snapBtn.disabled = false
     })
