@@ -19,5 +19,5 @@ io.sockets.on('connection', function(socket) {
 });
 
 app.get('/images', function(req, res) {
-  res.send(images);
+  res.json(images);
 });
