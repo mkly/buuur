@@ -172,10 +172,8 @@ xhr.send();
         oldblob
 
     gif.on("finished", function(blob) {
-      //result.src = window.URL.createObjectURL(blob)
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				console.log(reader.result);
 				result.src = reader.result;
 				socket.emit('add buuur', {img: reader.result});
 			}
