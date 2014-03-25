@@ -4,7 +4,7 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     images = [];
 
-server.listen(80);
+server.listen(process.env.PORT || 3000);
 
 app.use("/", express.static(__dirname + "/public"));
 
