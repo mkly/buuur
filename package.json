@@ -2,20 +2,20 @@
   "name": "buuur",
   "version": "0.1.0",
   "description": "",
-  "main": "app.js",
+  "main": "web/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "private": "yes",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mkly/burp.git"
+    "url": "git://github.com/mkly/buuur.git"
   },
   "author": "Mike Lay",
   "license": "BSD",
   "gitHead": "453cea357db9a9853e8de4ba165c2b6137cd9a19",
   "bugs": {
-    "url": "https://github.com/mkly/burp/issues"
+    "url": "https://github.com/mkly/buuur/issues"
   },
   "dependencies": {
     "express": "~3.4.8",
