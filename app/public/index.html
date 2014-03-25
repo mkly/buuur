@@ -98,7 +98,7 @@ var video = document.getElementById("webcam"),
     height = 120,
     imagesContainer = document.getElementById("images"),
     images = [],
-    socket = io.connect('buuur.herokuapp.com'),
+    socket = io.connect(),
     imagesTemplate = _.template(document.getElementById("images-template").innerHTML);
 
 if (!navigator.getUserMedia) {
