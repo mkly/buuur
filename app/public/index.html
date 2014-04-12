@@ -7,6 +7,7 @@
 <script src="gif.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.6/hammer.min.js"></script>
 
 <style>
@@ -110,7 +111,9 @@ if (!navigator.getUserMedia) {
   console.log("Camera Not Supported")
   return;
 }
-
+Hammer(result).on("dragstart", function() {
+  result.style.opacity = "0.5";
+});
 Hammer(result).on("drag", (function() {
   return _.throttle(function(ev) {
     var g = ev.gesture;
@@ -123,6 +126,7 @@ Hammer(result).on("drag", (function() {
 
 Hammer(result).on("dragend", function(ev) {
   result.style.transform = "translate(0,0)";
+  result.style.opacity = "1";
 });
 
 socket.on('buuur added', function(data) {
