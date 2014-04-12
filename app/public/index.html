@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-<link rel="stylesheet" href="//yui.yahooapis.com/pure/0.4.2/pure-min.css">
+<link rel="stylesheet" href="//yui.yahooapis.com/pure/0.5.0-rc-1/pure-min.css">
 <script type="text/javascript" src="gif.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
@@ -29,8 +29,12 @@
   float: left;
 }
 #snap {
-  margin: 15px auto;
+  margin: 0 uto;
   display: block
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  width: 100%;
 }
 .pure-button {
   background: #e60;
@@ -40,9 +44,16 @@
   opacity: 0.5;
 }
 #images {
-	margin: 0;
-	text-align: center;
-	list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  list-style-type: none;
+}
+#images li {
+  line-height: 0;
+}
+img {
+  max-width: 100%;
 }
 </style>
 
@@ -50,7 +61,7 @@
 
 <body>
 
-<div style="margin-top: 15px">
+<div style="margin: 0 auto; max-width: 320px">
 <div class="pure-g">
   <div class="pure-u-1-2">
     <video class="lighten" id="webcam"></video>
@@ -59,20 +70,18 @@
   <div class="pure-u-1-2">
     <img id="result" src="blank.png"/>
   </div>
+</div>
+<div class="pure-g">
   <div class="pure-u-1-1">
     <button id="snap" class="pure-button">Snap</button>
   </div>
 </div>
-<div class="pure-g">
-	<div class="pure-u-1">
-		<ul id="images"></ul>
-	</div>
-</div>
+<ul class="pure-g" id="images"></ul>
 </div>
 
 <script type="html/template" id="images-template">
 <% _.each(images, function(img) { %>
-	<li><img src="<%= img %>" /></li>
+  <li class="pure-u-1-2"><img src="<%= img %>" /></li>
 <% }); %>
 </script>
 
@@ -102,11 +111,11 @@ if (!navigator.getUserMedia) {
 
 
 socket.on('buuur added', function(data) {
-	images.unshift(data.img);
-	while (images.length > 10) {
-		images.pop();
-	}
-	imagesContainer.innerHTML = imagesTemplate({images: images});
+  images.unshift(data.img);
+  while (images.length > 10) {
+    images.pop();
+  }
+  imagesContainer.innerHTML = imagesTemplate({images: images});
 });
 
 navigator.getUserMedia({video: true}, successCallback, errorCallback)
@@ -165,12 +174,12 @@ xhr.send();
         oldblob
 
     gif.on("finished", function(blob) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				result.src = reader.result;
-				socket.emit('add buuur', {img: reader.result});
-			}
-			reader.readAsDataURL(blob);
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        result.src = reader.result;
+        socket.emit('add buuur', {img: reader.result});
+      }
+      reader.readAsDataURL(blob);
       window.URL.revokeObjectURL(oldblob)
       oldblob = blob
       result.className = ""
