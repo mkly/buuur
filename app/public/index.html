@@ -116,11 +116,12 @@ Hammer(result).on("dragstart", function() {
   result.style.opacity = "0.5";
   imageContainers = imagesContainer.getElementsByTagName("li");
 });
+Hammer(result).on("drag", function(ev) {
+  ev.gesture.preventDefault();
+});
 Hammer(result).on("drag", (function() {
   return _.throttle(function(ev) {
     var g = ev.gesture;
-    g.preventDefault();
-
     var translate = ['translate(', g.deltaX, 'px, ', g.deltaY, 'px', ')'].join("");
     result.style.transform = translate;
     var i,l = imageContainers.length;
