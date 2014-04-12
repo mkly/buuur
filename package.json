@@ -12,7 +12,7 @@
     "url": "git://github.com/mkly/buuur.git"
   },
   "author": "Mike Lay",
-  "license": "BSD",
+  "license": "AGPLv3",
   "gitHead": "453cea357db9a9853e8de4ba165c2b6137cd9a19",
   "bugs": {
     "url": "https://github.com/mkly/buuur/issues"
@@ -20,5 +20,8 @@
   "dependencies": {
     "express": "~3.4.8",
     "socket.io": "~0.9.16"
+  },
+  "devDependencies": {
+
   }
 }
