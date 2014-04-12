@@ -103,6 +103,7 @@ var video = document.getElementById("webcam"),
     width = 160,
     height = 120,
     imagesContainer = document.getElementById("images"),
+    imageContainers = imagesContainer.getElementsByTagName("li"),
     images = [],
     socket = io.connect(),
     imagesTemplate = _.template(document.getElementById("images-template").innerHTML);
@@ -113,6 +114,7 @@ if (!navigator.getUserMedia) {
 }
 Hammer(result).on("dragstart", function() {
   result.style.opacity = "0.5";
+  imageContainers = imagesContainer.getElementsByTagName("li");
 });
 Hammer(result).on("drag", (function() {
   return _.throttle(function(ev) {
@@ -121,12 +123,30 @@ Hammer(result).on("drag", (function() {
 
     var translate = ['translate(', g.deltaX, 'px, ', g.deltaY, 'px', ')'].join("");
     result.style.transform = translate;
+    var i,l = imageContainers.length;
+    var cx = result.offsetLeft + Math.ceil(result.offsetWidth / 2) + g.deltaX;
+    var cy = result.offsetTop + Math.ceil(result.offsetHeight / 2) + g.deltaY;
+    for (i=0; i<l; i++) {
+      var x = imageContainers[i].offsetLeft;
+      var y = imageContainers[i].offsetTop;
+      var x2 = imageContainers[i].offsetWidth + x;
+      var y2 = imageContainers[i].offsetHeight + y;
+      if (cx > x && cx < x2 && cy > y && cy < y2) {
+        imageContainers[i].style.opacity = "0.4";
+      } else {
+        imageContainers[i].style.opacity = "1";
+      }
+    }
   }, 1000 / 15, {trailing: false});
 })());;
 
 Hammer(result).on("dragend", function(ev) {
   result.style.transform = "translate(0,0)";
   result.style.opacity = "1";
+  var i,l = imageContainers.length;
+  for (i=0;i<l;i++) {
+    imageContainers[i].style.opacity = "1";
+  }
 });
 
 socket.on('buuur added', function(data) {
