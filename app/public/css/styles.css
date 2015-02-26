@@ -1,0 +1,47 @@
+#webcam, #result, #canvas {
+  height: 120px;
+  width: 160px;
+
+}
+#webcam {
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+  float: right;
+}
+#canvas {
+  display: none;
+}
+#result {
+  display: block;
+  float: left;
+}
+#snap {
+  margin: 0 uto;
+  display: block
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  width: 100%;
+}
+.pure-button {
+  background: #e60;
+  color: #fff;
+}
+.lighten {
+  opacity: 0.5;
+}
+#images {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  list-style-type: none;
+}
+#images li {
+  line-height: 0;
+}
+img {
+  max-width: 100%;
+}
+
