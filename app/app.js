@@ -21,3 +21,7 @@ io.sockets.on('connection', function(socket) {
 app.get('/images', function(req, res) {
   res.json(images);
 });
+
+app.get('/clear', function(req, res) {
+  images = [];
+});

@@ -17,18 +17,20 @@
   display: block;
   float: left;
 }
-#snap {
+.pure-button {
   margin: 0 uto;
   display: block
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
   width: 100%;
-}
-.pure-button {
-  background: #e60;
   color: #fff;
 }
+
+.pure-button-primary {
+  background: #e60;
+}
+
 .lighten {
   opacity: 0.5;
 }

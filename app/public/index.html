@@ -21,11 +21,14 @@
 </div>
 <div class="pure-g">
   <div class="pure-u-1-1">
-    <button id="snap" class="pure-button">Snap</button>
+    <button id="snap" class="pure-button pure-button-primary">Snap</button>
   </div>
 </div>
 <ul class="pure-g" id="images"></ul>
+<div class="pure-g">
+  <div class="pure-u-1-1" id="clear-button-container"></div>
 </div>
+</div><!-- end -->
 
 <script type="html/template" id="images-template">
 <% _.each(images, function(img) { %>
@@ -33,6 +36,12 @@
 <% }); %>
 </script>
 
+<script type="html/template" id="clear-button-template">
+<% if (images.length) { %>
+  <button id="clear-button" class="pure-button">Clear</button>
+<% } %>
+</script>
+</script>
 <script data-main="/js/app.js" src="/js/requirejs/require.js"></script>
 </body>
 </html>

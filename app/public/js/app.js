@@ -33,6 +33,7 @@ requirejs([
   var video = document.getElementById("webcam"),
       preview = document.getElementById("preview"),
       snapBtn = document.getElementById("snap"),
+      clearBtn = document.getElementById("clear-button"),
       canvas = document.getElementById("canvas"),
       ctx = canvas.getContext("2d"),
       result = document.getElementById("result"),
@@ -40,9 +41,11 @@ requirejs([
       height = 120,
       imagesContainer = document.getElementById("images"),
       imageContainers = imagesContainer.getElementsByTagName("li"),
+      clearButtonContainer = document.getElementById("clear-button-container"),
       images = [],
       socket = io.connect(),
-      imagesTemplate = _.template(document.getElementById("images-template").innerHTML);
+      imagesTemplate = _.template(document.getElementById("images-template").innerHTML),
+      clearButtonTemplate = _.template(document.getElementById("clear-button-template").innerHTML);
 
   if (!navigator.getUserMedia) {
     console.log("Camera Not Supported");
@@ -91,7 +94,7 @@ requirejs([
     while (images.length > 10) {
       images.pop();
     }
-    imagesContainer.innerHTML = imagesTemplate({images: images});
+    render({images: images});
   });
 
   navigator.getUserMedia({video: true}, successCallback, errorCallback);
@@ -106,12 +109,32 @@ requirejs([
 
   function errorCallback() {}
 
+  function render(data) {
+    data = data || {};
+    imagesContainer.innerHTML = imagesTemplate({images: images});
+    clearButtonContainer.innerHTML = clearButtonTemplate({images: images});
+    var clearBtn = document.getElementById("clear-button");
+    if (clearBtn) {
+      clearBtn.onclick = function() {
+        clearBtn.disabled = true;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/clear', true);
+        xhr.onload = function() {
+          if (xhr.status == 200) {
+            images = JSON.parse(xhr.responseText);
+            render({images: images});
+          }
+        };
+        xhr.send();
+      };
+    }
+  }
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/images', true);
   xhr.onload = function() {
     if (xhr.status == 200) {
       images = JSON.parse(xhr.responseText);
-      imagesContainer.innerHTML = imagesTemplate({images: images});
+      render({images: images});
     }
   };
   xhr.send();
@@ -122,6 +145,8 @@ requirejs([
     canvas.width = width;
     ctx.translate(width, 0);
     ctx.scale(-1, 1);
+
+
 
     snapBtn.onclick = function() {
 
