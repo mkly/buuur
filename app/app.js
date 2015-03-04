@@ -24,4 +24,5 @@ app.get('/images', function(req, res) {
 
 app.get('/clear', function(req, res) {
   images = [];
+  res.json(images);
 });
