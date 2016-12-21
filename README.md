@@ -13,8 +13,8 @@ A fairly trivial web app to send webcam gifs back and forth via websockets.
 
 ## Install
 
-### Heroku / Dokku
-Just push the repository and magic should make everything work
+### Heroku
+Just push the repository and magic should make everything work as long as you use https and chrome
 
 ### Local
 Same thing but on port 3000

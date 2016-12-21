@@ -11,9 +11,7 @@ app.use("/", express.static(__dirname + "/public"));
 io.sockets.on('connection', function(socket) {
   socket.on('add buuur', function(data) {
     images.unshift(data.img);
-    while (images.length > 4) {
-      images.pop();
-    }
+    images = images.slice(0, 4);
     io.sockets.emit('buuur added', { img: data.img });
   });
 });
