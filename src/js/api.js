@@ -1,11 +1,11 @@
-var actions = require('./actions');
+import actions from './actions';
 
-function getImages(store) {
-  var xhr = new XMLHttpRequest();
+export function getImages(store) {
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', '/images', true);
   xhr.onload = function() {
     if (xhr.status == 200) {
-      images = JSON.parse(xhr.responseText);
+      let images = JSON.parse(xhr.responseText);
       while (images.length) {
         store.dispatch(actions.creators.addImage(images.pop()));
       }
@@ -14,21 +14,13 @@ function getImages(store) {
   xhr.send();
 }
 
-function clearImages(store) {
-  var xhr = new XMLHttpRequest();
+export function clearImages(store) {
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', '/clear', true);
   xhr.onload = function() {
     if (xhr.status == 200) {
-      var images = JSON.parse(xhr.responseText);
-      while (images.length) {
-        store.dispatch(actions.creators.addImage(images.pop()));
-      }
+      store.dispatch(actions.creators.clearImages());
     }
   };
   xhr.send();
 }
-
-module.exports = {
-  getImages: getImages,
-  clearImages: clearImages
-};

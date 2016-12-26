@@ -1,21 +1,21 @@
-var api = require('./api');
-var actions = require('./actions');
+import { clearImages } from './api';
+import actions from './actions';
 
-module.exports = function(document, store, imagesContainer, imagesTemplate, clearButtonContainer, clearButtonTemplate) {
+export default function(document, store, imagesContainer, imagesTemplate, clearButtonContainer, clearButtonTemplate) {
   return function() {
-    var images = store.getState().images.map(function(obj) {
+    const images = store.getState().images.map(function(obj) {
       return obj.image;
     });
 
     imagesContainer.innerHTML = imagesTemplate({images: images});
     clearButtonContainer.innerHTML = clearButtonTemplate({images: images});
-    var clearBtn = document.getElementById("clear-button");
+    const clearBtn = document.getElementById("clear-button");
     if (clearBtn) {
       clearBtn.onclick = function() {
         clearBtn.disabled = true;
         store.dispatch(actions.creators.clearImages());
-        api.clearImages(store);
+        clearImages(store);
       };
     }
   }
-};
+}

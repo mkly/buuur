@@ -1,8 +1,8 @@
-var ADD_IMAGE = 'ADD_IMAGE';
-var POP_IMAGE = 'REMOVE_IMAGE';
-var CLEAR_IMAGES = 'CLEAR_IMAGES';
+const ADD_IMAGE = 'ADD_IMAGE';
+const POP_IMAGE = 'REMOVE_IMAGE';
+const CLEAR_IMAGES = 'CLEAR_IMAGES';
 
-module.exports = {
+export default {
   types: {
     ADD_IMAGE: ADD_IMAGE,
     POP_IMAGE: POP_IMAGE,

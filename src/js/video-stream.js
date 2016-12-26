@@ -1,4 +1,4 @@
-var getUserMedia = require('getusermedia');
+import getUserMedia from 'getusermedia';
 
 function callback(window, el, err, stream) {
   if (err) {
@@ -14,9 +14,9 @@ function callback(window, el, err, stream) {
   el.play();
 }
 
-module.exports = function(window, el) {
+export default function(window, el) {
   getUserMedia(
     {video: true},
     callback.bind(undefined, window, el)
   );
-};
+}

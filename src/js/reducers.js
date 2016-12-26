@@ -1,8 +1,7 @@
-var actions = require('./actions');
-var initialState = require('./initial-state');
-var _ = require('lodash');
+import actions from './actions';
+import initialState from './initial-state';
 
-function images(state, action) {
+export function images(state, action) {
   if (typeof state === 'undefined') {
     state = initialState();
   }
@@ -24,5 +23,3 @@ function images(state, action) {
       return state;
   };
 }
-
-module.exports = images;
