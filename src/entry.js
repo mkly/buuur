@@ -1,7 +1,7 @@
 import 'purecss';
 import './css/style.css';
 
-import io from 'socket.io-client';
+import getSocket from './js/get-socket';
 import normie from './js/normie';
 
 import { getImages } from './js/api';
@@ -19,7 +19,7 @@ const snapBtn = document.getElementById('snap'),
       width = 160,
       height = 120,
       store = getStore(),
-      socket = io.connect();
+      socket = getSocket();
 
 normie(window);
 store.subscribe(imagesRenderer('images-template', 'images'));

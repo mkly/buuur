@@ -3,7 +3,7 @@ var resolve = require("path").resolve;
 module.exports = {
   entry: "./src/entry.js",
   output: {
-    path: __dirname + "/app/public",
+    path: resolve(__dirname, "app/public"),
     filename: "bundle.js"
   },
   module: {
@@ -11,7 +11,10 @@ module.exports = {
       { test: /\.css$/, loader: "style!css" },
       {
         test: /\.js$/,
-        include: resolve(__dirname, "src"),
+        include: [
+          resolve(__dirname, "src"),
+          resolve(__dirname, "tests")
+        ],
         loader: "babel-loader",
         query: {
           presets: ["es2015"]
