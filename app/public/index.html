@@ -7,26 +7,25 @@
 
 <body>
 
-
-<div style="margin: 0 auto; max-width: 320px">
-<div class="pure-g">
-  <div class="pure-u-1-2">
-    <video class="lighten" id="webcam"></video>
-    <canvas id="canvas"></canvas>
+<div id="app" style="margin: 0 auto; max-width: 320px">
+  <div class="pure-g">
+    <div class="pure-u-1-2">
+      <video class="lighten" id="video-stream"></video>
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="pure-u-1-2">
+      <img id="result" src="blank.png"/>
+    </div>
   </div>
-  <div class="pure-u-1-2">
-    <img id="result" src="blank.png"/>
+  <div class="pure-g">
+    <div class="pure-u-1-1">
+      <button id="snap" class="pure-button pure-button-primary">Snap</button>
+    </div>
   </div>
-</div>
-<div class="pure-g">
-  <div class="pure-u-1-1">
-    <button id="snap" class="pure-button pure-button-primary">Snap</button>
+  <ul class="pure-g" id="images"></ul>
+  <div class="pure-g">
+    <div class="pure-u-1-1" id="clear-button-container"></div>
   </div>
-</div>
-<ul class="pure-g" id="images"></ul>
-<div class="pure-g">
-  <div class="pure-u-1-1" id="clear-button-container"></div>
-</div>
 </div><!-- end -->
 
 <script type="html/template" id="images-template">
@@ -36,9 +35,7 @@
 </script>
 
 <script type="html/template" id="clear-button-template">
-<% if (images.length) { %>
   <button id="clear-button" class="pure-button">Clear</button>
-<% } %>
 </script>
 
 <script src="/bundle.js"></script>

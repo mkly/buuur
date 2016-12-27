@@ -1,0 +1,12 @@
+#images {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  list-style-type: none;
+}
+#images li {
+  line-height: 0;
+}
+img {
+  max-width: 100%;
+}

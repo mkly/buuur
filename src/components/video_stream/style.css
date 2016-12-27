@@ -1,0 +1,9 @@
+#video-stream {
+  height: 120px;
+  width: 160px;
+  transform: scale(-1, 1);
+  float: right;
+}
+#canvas {
+  display: none;
+}

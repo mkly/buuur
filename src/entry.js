@@ -1,52 +1,30 @@
-import _ from 'lodash';
-import { createStore } from 'redux';
-import io from 'socket.io-client';
-import normie from './js/normie';
-const socket = io.connect();
-
-
 import 'purecss';
 import './css/style.css';
 
-normie(window);
+import io from 'socket.io-client';
+import normie from './js/normie';
 
 import { getImages } from './js/api';
-import videoStream from './js/video-stream';
 import generateGif from './js/generate-gif';
-import getRender from './js/get-render';
-import setupCanvas from './js/setup-canvas';
 import actions from './js/actions';
-import { images as imagesReducer } from './js/reducers';
+import getStore from './js/store';
 
-const store = createStore(imagesReducer);
+import imagesRenderer from './components/images';
+import clearButtonRenderer from './components/clear_button';
+import videoStream from './components/video_stream';
+import './components/canvas';
+import './components/result';
 
-const video = document.getElementById("webcam"),
-      snapBtn = document.getElementById("snap"),
-      clearBtn = document.getElementById("clear-button"),
-      canvas = document.getElementById("canvas"),
-      ctx = canvas.getContext("2d"),
-      result = document.getElementById("result"),
+const snapBtn = document.getElementById('snap'),
       width = 160,
       height = 120,
-      imagesContainer = document.getElementById("images"),
-      imageContainers = imagesContainer.getElementsByTagName("li"),
-      clearButtonContainer = document.getElementById("clear-button-container"),
-      imagesTemplate = _.template(document.getElementById("images-template").innerHTML),
-      clearButtonTemplate = _.template(document.getElementById("clear-button-template").innerHTML);
+      store = getStore(),
+      socket = io.connect();
 
-videoStream(window, video);
-
-store.subscribe(
-  getRender(
-    document,
-    store,
-    imagesContainer,
-    imagesTemplate,
-    clearButtonContainer,
-    clearButtonTemplate
-  )
-);
-
+normie(window);
+store.subscribe(imagesRenderer('images-template', 'images'));
+store.subscribe(clearButtonRenderer('clear-button-template', 'clear-button-container'));
+videoStream('video-stream', 'canvas', height, width);
 getImages(store);
 
 socket.on('buuur added', function(data) {
@@ -54,17 +32,17 @@ socket.on('buuur added', function(data) {
   store.dispatch(actions.creators.popImage());
 });
 
-setupCanvas(canvas, ctx, height, width);
-
 snapBtn.onclick = function() {
+  const canvasElement = document.getElementById('canvas');
+
   generateGif(
     window,
-    snapBtn,
+    document.getElementById('snap'),
     height,
     width,
-    video,
-    result,
-    ctx,
+    document.getElementById('video-stream'),
+    document.getElementById('result'),
+    canvasElement.getContext('2d'),
     socket
   );
 };
