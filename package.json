@@ -4,7 +4,9 @@
   "description": "",
   "main": "app/app.js",
   "scripts": {
+    "test-e2e": "NODE_ENV=test JASMINE_CONFIG_PATH=jasmine.json jasmine",
     "test": "NODE_ENV=test karma start karma.conf.js",
+    "test-all": "npm run test && npm test-e2e",
     "install": "npm run build && cp node_modules/gif.js/dist/gif.worker.js app/public/gif.worker.js",
     "serve": "node app/app.js",
     "build": "webpack"
@@ -38,6 +40,7 @@
   "devDependencies": {
     "babel-template": "^6.16.0",
     "babel-types": "^6.21.0",
+    "chromedriver": "^2.26.1",
     "jasmine": "^2.5.2",
     "jasmine-core": "^2.5.2",
     "karma": "^1.3.0",
@@ -45,6 +48,7 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
     "karma-phantomjs-launcher": "^1.0.2",
-    "karma-webpack": "^1.8.1"
+    "karma-webpack": "^1.8.1",
+    "selenium-webdriver": "^3.0.1"
   }
 }
