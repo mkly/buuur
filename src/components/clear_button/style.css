@@ -1,0 +1,8 @@
+#clear-button {
+  padding: 14px;
+}
+
+#clear-button svg {
+  padding-left: 3px;
+  padding-right: 3px;
+}

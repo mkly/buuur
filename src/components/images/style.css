@@ -6,7 +6,5 @@
 }
 #images li {
   line-height: 0;
-}
-img {
-  max-width: 100%;
+  overflow: hidden;
 }

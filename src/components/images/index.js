@@ -1,7 +1,7 @@
 import './style.css';
 
 import _ from 'lodash';
-import { clearImages } from '../../js/api';
+import { clearImages } from '../../js/imagesRepo';
 import { actions } from '../../js/actions';
 
 import getStore from '../../js/store';

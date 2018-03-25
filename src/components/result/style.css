@@ -1,6 +1,6 @@
 #result {
-  height: 120px;
-  width: 160px;
   display: block;
   float: left;
+  position: relative;
+  max-width: none;
 }

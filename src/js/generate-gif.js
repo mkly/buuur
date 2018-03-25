@@ -22,7 +22,13 @@ export default function(window, snapBtn, height, width, video, result, ctx, sock
           return;
         }
         numFrames -= 1;
-        ctx.drawImage(video, 0, 0, width, height);
+
+        if (video.videoHeight < video.videoWidth) {
+          ctx.drawImage(video, (video.videoWidth - video.videoHeight) / 2, 0, video.videoHeight, video.videoHeight, 0, 0, width, height);
+        } else {
+          ctx.drawImage(video, 0, (video.videoHeight - video.videoWidth) / 2, video.videoWidth, video.videoWidth, 0, 0, width, height);
+        }
+
         gif.addFrame(ctx, {copy: true, delay: 100});
       }, 340);
 
