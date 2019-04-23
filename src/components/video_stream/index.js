@@ -21,7 +21,7 @@ function callback(window, el, canvas, result, height, width, err, stream) {
   if (el.mozSrcObject !== undefined) {
     el.mozSrcObject = stream;
   } else {
-    el.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+    el.srcObject = stream;
   }
   
   el.addEventListener('playing', e => {
