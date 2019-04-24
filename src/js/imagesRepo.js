@@ -11,7 +11,6 @@ export function getImages() {
   xhr.open('GET', `/images/${room}`, true);
   xhr.onload = function() {
     if (xhr.status == 200) {
-      console.log(xhr.resonseText);
       let images = JSON.parse(xhr.responseText);
       while (images.length) {
         const store = getStore();

@@ -1,6 +1,6 @@
 const selenium = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const homeUrl = 'http://localhost:' + (process.env.PORT || 3000);
+const homeUrl = 'http://localhost:' + (process.env.PORT || 3000) + '/#testing';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 

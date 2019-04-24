@@ -25,7 +25,7 @@ app.get('/images/:room', function(req, res) {
 });
 
 app.get('/clear/:room', function(req, res) {
-  const room = req.params.room.replcae(/[^a-z0-9]/, '');
+  const room = req.params.room.replace(/[^a-z0-9]/, '');
   delete images[room];
   res.json([]);
   io.sockets.emit('buuur cleared', {});
