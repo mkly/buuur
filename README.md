@@ -22,3 +22,4 @@ Some highlights:
 * `npm run build` builds from source
 * `num run watch` sets webpack to watch for changes
 * `npm run serve` runs local server on port 3000
+* `npm run test-e2e` runs browser end to end tests
