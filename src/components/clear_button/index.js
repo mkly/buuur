@@ -17,7 +17,7 @@ export default function(clearButtonTmplId, clearButtonContainerId) {
   const clearBtnContainer = document.getElementById(clearButtonContainerId);
 
   return function() {
-    if (getStore().getState().images.length < 1) {
+    if (getStore().getState().images.images.length < 1) {
       clearBtnContainer.innerHTML = '';
       return;
     }

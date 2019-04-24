@@ -3,7 +3,6 @@ import './css/style.css';
 
 import getSocket from './js/get-socket';
 import normie from './js/normie';
-
 import { getImages } from './js/imagesRepo';
 import generateGif from './js/generate-gif';
 import actions from './js/actions';
@@ -12,8 +11,9 @@ import getStore from './js/store';
 import imagesRenderer from './components/images';
 import clearButtonRenderer from './components/clear_button';
 import videoStream from './components/video_stream';
+import roomForm from './components/room_form';
+import navigation from './components/navigation';
 import './components/canvas';
-import './components/result';
 
 import fontawesome from '@fortawesome/fontawesome';
 import faVideo from '@fortawesome/fontawesome-free-solid/faVideo';
@@ -28,8 +28,9 @@ const snapBtn = document.getElementById('snap'),
 normie(window);
 store.subscribe(imagesRenderer('images-template', 'images'));
 store.subscribe(clearButtonRenderer('clear-button-template', 'clear-button-container'));
-videoStream('video-stream', 'canvas', 'result', height, width);
-getImages(store);
+store.subscribe(navigation('image-booth', 'room-select'));
+videoStream('video-stream', 'canvas', height, width);
+roomForm('room-form', 'room-form-input');
 
 socket.on('buuur added', function(data) {
   store.dispatch(actions.creators.addImage(data.img));
@@ -50,8 +51,14 @@ snapBtn.onclick = function() {
     height,
     width,
     document.getElementById('video-stream'),
-    document.getElementById('result'),
     canvasElement.getContext('2d'),
     socket
   );
 };
+
+if (window.location.hash) {
+  const room = window.location.hash.replace('#', '');
+  store.dispatch(actions.creators.setRoom(room));
+  store.dispatch(actions.creators.setView('image-booth'));
+  getImages();
+}

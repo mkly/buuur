@@ -1,13 +1,17 @@
 import GIF from 'gif.js';
+import getStore from './store';
 
-export default function(window, snapBtn, height, width, video, result, ctx, socket) {
+export default function(window, snapBtn, height, width, video, ctx, socket) {
   snapBtn.disabled = true;
   video.className = "";
-  result.className = "lighten";
 
   let oldblob,
       numFrames = 8;
 
+  const room = getStore().getState().room.room;
+  if (!room) {
+    return;
+  }
   const gif = new GIF({
         workers: 2,
         quality: 3,
@@ -35,13 +39,14 @@ export default function(window, snapBtn, height, width, video, result, ctx, sock
   gif.on("finished", function(blob) {
     const reader = new FileReader();
     reader.onload = function(e) {
-      result.src = reader.result;
-      socket.emit('add buuur', {img: reader.result});
+      const currentRoom = getStore().getState().room.room;
+      if (currentRoom && currentRoom === room) {
+        socket.emit('add buuur', {img: reader.result, room: room});
+      }
     };
     reader.readAsDataURL(blob);
     window.URL.revokeObjectURL(oldblob);
     oldblob = blob;
-    result.className = "";
     snapBtn.disabled = false;
   });
 

@@ -20,6 +20,21 @@ img {
   max-width: none;
 }
 
+.intro {
+  padding: 7px;
+  font-size: 14px;
+  color: #444;
+}
+
 #snap {
   padding: 14px;
+}
+
+.room-select-form-input {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.room-select-form-input::placeholder {
+  color: #999;
 }

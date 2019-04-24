@@ -1,25 +1,43 @@
 import actions from './actions';
+import getStore from './store';
 
-export function getImages(store) {
+export function getImages() {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', '/images', true);
+  const store = getStore();
+  const room = store.getState().room.room;
+  if (!room) {
+    return;
+  }
+  xhr.open('GET', `/images/${room}`, true);
   xhr.onload = function() {
     if (xhr.status == 200) {
+      console.log(xhr.resonseText);
       let images = JSON.parse(xhr.responseText);
       while (images.length) {
-        store.dispatch(actions.creators.addImage(images.pop()));
+        const store = getStore();
+        if (room && room === store.getState().room.room) {
+          store.dispatch(actions.creators.addImage(images.pop()));
+        }
       }
     }
   };
   xhr.send();
 }
 
-export function clearImages(store) {
+export function clearImages() {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', '/clear', true);
+  const store = getStore();
+  const room = store.getState().room.room;
+  if (!room) {
+    return;
+  }
+  xhr.open('GET', `/clear/${room}`, true);
   xhr.onload = function() {
     if (xhr.status == 200) {
-      store.dispatch(actions.creators.clearImages());
+      const store = getStore();
+      if (room && room === store.getState().room.room) {
+        store.dispatch(actions.creators.clearImages());
+      }
     }
   };
   xhr.send();

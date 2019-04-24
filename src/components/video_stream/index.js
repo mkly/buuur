@@ -2,18 +2,17 @@ import './style.css';
 
 import getUserMedia from 'getusermedia';
 
-export default function(videoId, canvasId, resultId, height, width) {
+export default function(videoId, canvasId, height, width) {
   const video = document.getElementById(videoId);
   const canvas = document.getElementById(canvasId);
-  const result = document.getElementById(resultId);
 
   getUserMedia(
     { audio: false, video: true },
-    callback.bind(undefined, window, video, canvas, result, height, width)
+    callback.bind(undefined, window, video, canvas, height, width)
   );
 }
 
-function callback(window, el, canvas, result, height, width, err, stream) {
+function callback(window, el, canvas, height, width, err, stream) {
   if (err) {
     return;
   }

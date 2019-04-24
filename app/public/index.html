@@ -8,23 +8,37 @@
 <body>
 
 <div id="app" style="margin: 0 auto; max-width: 320px">
-  <div class="pure-g">
-    <div class="pure-u-1-2" style="overflow: hidden; height: 160px; width: 160px">
-      <video class="lighten" id="video-stream" muted="true"></video>
-      <canvas id="canvas"></canvas>
-    </div>
-    <div class="pure-u-1-2" style="overflow: hidden; background: #ccc">
-      <img id="result" src=""/>
-    </div>
-  </div>
-  <div class="pure-g">
-    <div class="pure-u-1-1">
-      <button id="snap" class="pure-button pure-button-primary"></button>
+  <div id="room-select">
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <form id="room-form" class="pure-form">
+          <input type="text" name="room" id="room-form-input" class="room-select-form-input" placeholder="Room handle"/>
+          <button class="pure-button pure-button-primary" type="submit">Create/Join Room</button>
+        </form>
+      </div>
     </div>
   </div>
-  <ul class="pure-g" id="images"></ul>
-  <div class="pure-g">
-    <div class="pure-u-1-1" id="clear-button-container"></div>
+  <div id="image-booth" hidden="1">
+    <div class="pure-g">
+      <div class="pure-u-1-2" style="overflow: hidden; height: 160px; width: 160px">
+        <video class="lighten" id="video-stream" muted="true"></video>
+        <canvas id="canvas"></canvas>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="intro">
+          Click the camera icon to record a quick video.<br/>Everyone in the room can see it and record their own.
+        </div>
+      </div>
+    </div>
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <button id="snap" class="pure-button pure-button-primary"></button>
+      </div>
+    </div>
+    <ul class="pure-g" id="images"></ul>
+    <div class="pure-g">
+      <div class="pure-u-1-1" id="clear-button-container"></div>
+    </div>
   </div>
 </div><!-- end -->
 
