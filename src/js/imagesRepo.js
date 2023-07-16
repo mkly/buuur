@@ -1,5 +1,5 @@
-import actions from './actions';
-import getStore from './store';
+import actions from "./actions";
+import getStore from "./store";
 
 export function getImages() {
   const xhr = new XMLHttpRequest();
@@ -8,8 +8,8 @@ export function getImages() {
   if (!room) {
     return;
   }
-  xhr.open('GET', `/images/${room}`, true);
-  xhr.onload = function() {
+  xhr.open("GET", `/images/${room}`, true);
+  xhr.onload = function () {
     if (xhr.status == 200) {
       let images = JSON.parse(xhr.responseText);
       while (images.length) {
@@ -30,8 +30,8 @@ export function clearImages() {
   if (!room) {
     return;
   }
-  xhr.open('GET', `/clear/${room}`, true);
-  xhr.onload = function() {
+  xhr.open("GET", `/clear/${room}`, true);
+  xhr.onload = function () {
     if (xhr.status == 200) {
       const store = getStore();
       if (room && room === store.getState().room.room) {

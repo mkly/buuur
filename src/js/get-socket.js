@@ -1,5 +1,5 @@
-import io from 'socket.io-client';
+import io from "socket.io-client";
 
-export default function() {
+export default function () {
   return io.connect();
 }

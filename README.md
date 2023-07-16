@@ -11,8 +11,13 @@ l_____j \__,_j \__,_j \__,_jl__j\_j
 
 A fairly trivial web app to send webcam gifs back and forth via websockets.
 
-### Heroku
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+Possibly running at https://buuur.fly.dev
+
+### Fly.io
+```bash
+fly launch
+fly deploy
+```
 
 ### Development
 See the `package.json` file for `npm` tasks

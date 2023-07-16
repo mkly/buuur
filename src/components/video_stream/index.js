@@ -1,29 +1,27 @@
-import './style.css';
+import "./style.css";
 
-import getUserMedia from 'getusermedia';
-
-export default function(videoId, canvasId, height, width) {
+export default function (videoId, canvasId, height, width) {
   const video = document.getElementById(videoId);
   const canvas = document.getElementById(canvasId);
 
-  getUserMedia(
-    { audio: false, video: true },
-    callback.bind(undefined, window, video, canvas, height, width)
-  );
+  navigator.mediaDevices.getUserMedia(
+    { audio: false, video: true, facingMode: { exact: "user" } },
+  ).then((stream) => {
+    callback(video, canvas, height, width, stream);
+  }).catch(() => {
+    alert("No camera :(");
+  });
 }
 
-function callback(window, el, canvas, height, width, err, stream) {
-  if (err) {
-    return;
-  }
-
+function callback(el, canvas, height, width, stream) {
   if (el.mozSrcObject !== undefined) {
     el.mozSrcObject = stream;
   } else {
     el.srcObject = stream;
+    el.src = stream;
   }
-  
-  el.addEventListener('playing', e => {
+
+  el.addEventListener("playing", () => {
     if (el.videoHeight < el.videoWidth) {
       const newWidth = width * (el.videoWidth / el.videoHeight);
       el.style.height = `${height}px`;
@@ -35,7 +33,6 @@ function callback(window, el, canvas, height, width, err, stream) {
       el.style.width = `${width}px`;
       el.style.top = `-${(newHeight - width) / 2}px`;
     }
-
   });
 
   el.play();
@@ -44,7 +41,7 @@ function callback(window, el, canvas, height, width, err, stream) {
 }
 
 function setupCanvas(canvas, height, width) {
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
 
   canvas.height = height;
   canvas.width = width;

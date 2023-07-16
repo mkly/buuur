@@ -1,17 +1,17 @@
 export function imagesState() {
   return {
-    images: []
+    images: [],
   };
 }
 
 export function roomState() {
   return {
-    room: undefined
+    room: undefined,
   };
 }
 
 export function navigationState() {
   return {
-    view: 'room-select'
+    view: "room-select",
   };
 }

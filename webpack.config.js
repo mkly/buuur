@@ -4,7 +4,7 @@ module.exports = {
   entry: "./src/entry.js",
   output: {
     path: resolve(__dirname, "app/public"),
-    filename: "bundle.js"
+    filename: "bundle.js",
   },
   module: {
     loaders: [
@@ -13,13 +13,13 @@ module.exports = {
         test: /\.js$/,
         include: [
           resolve(__dirname, "src"),
-          resolve(__dirname, "tests")
+          resolve(__dirname, "tests"),
         ],
         loader: "babel-loader",
         query: {
-          presets: ["es2015"]
-        }
-      }
-    ]
-  }
+          presets: ["es2015"],
+        },
+      },
+    ],
+  },
 };

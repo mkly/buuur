@@ -1,0 +1,4 @@
+/node_modules/
+/app/public/bundle.js
+/app/public/gif.worker.js
+npm-debug.log
