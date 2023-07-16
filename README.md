@@ -28,3 +28,7 @@ Some highlights:
 * `num run watch` sets webpack to watch for changes
 * `npm run serve` runs local server on port 3000
 * `npm run test-e2e` runs browser end to end tests
+
+### FAQ
+*Q:* Why is this an unreadable mess?
+*A:* I made it a hundred years ago and is now just a fun legacy app that I use sometimes with friends. I keep it functioning with minimal effort at this point.
